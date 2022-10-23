@@ -1,15 +1,14 @@
 package com.example.ProjectManagementMicroservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.*;
 
 
 @Entity
@@ -21,8 +20,8 @@ public class Project implements Serializable{
 		@GeneratedValue
 		private int id;
 		private String name ;
-		@Lob
-		private String description;
+
+		private String descriptionProject;
 
 		@CreationTimestamp
 		private LocalDate createdAt;
@@ -33,9 +32,27 @@ public class Project implements Serializable{
 
 		private boolean status;
 
+	@OneToMany(mappedBy = "project")
+	@JsonIgnore
+	private Set<Task> tasks;
 
+	public Set<Task> getTasks() {
+		return tasks;
+	}
 
-		public int getId() {
+	public void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	public String getDescriptionProject() {
+		return descriptionProject;
+	}
+
+	public void setDescriptionProject(String descriptionProject) {
+		this.descriptionProject = descriptionProject;
+	}
+
+	public int getId() {
 			return id;
 		}
 		public void setId(int id) {
@@ -47,13 +64,7 @@ public class Project implements Serializable{
 		public void setName(String name) {
 			this.name = name;
 		}
-		
-		public String getDescription() {
-			return description;
-		}
-		public void setDescription(String name) {
-			this.description = description;
-		}
+
 
 	public LocalDate getCreatedAt() {
 		return createdAt;
@@ -89,16 +100,23 @@ public class Project implements Serializable{
 		public Project() {
 			super();
 		}
-		public Project(int id, String name, String description) {
+		public Project(int id, String name, String descriptionProject) {
 			super();
 			this.id = id;
 			this.name = name;
-			this.description = description;
-		}
-		@Override
-		public String toString() {
-			return "Project [id=" + id + ", name=" + name + ", description=" + description + ", status=" + status + ", created at=" + createdAt+ "]";
+			this.descriptionProject = descriptionProject;
 		}
 
-
+	@Override
+	public String toString() {
+		return "Project{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", descriptionProject='" + descriptionProject + '\'' +
+				", createdAt=" + createdAt +
+				", updatedAt=" + updatedAt +
+				", status=" + status +
+				", tasks=" + tasks +
+				'}';
+	}
 }

@@ -3,6 +3,7 @@ package com.example.ProjectManagementMicroservice.services;
 import java.util.List;
 
 import com.example.ProjectManagementMicroservice.entities.Project;
+import com.example.ProjectManagementMicroservice.entities.Task;
 import com.example.ProjectManagementMicroservice.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,11 @@ public class ProjectService implements IProject{
 		List<Project> projects = (List<Project>) projectRepository.findAll();
 		return projects;
 	}
+
+	public List<Project> getTasksByProjectId() {
+		List<Project> projects = (List<Project>) projectRepository.findAll();
+		return projects;
+	}
 	
 	//Chercher un project
 	/*public Project findProject(int id) {
@@ -75,7 +81,7 @@ public class ProjectService implements IProject{
 
 
 	@Override
-	public void deleteProject(Long id) {
+	public void deleteProject(Integer id) {
 		projectRepository.deleteById(id);	
 	}
 
@@ -87,11 +93,15 @@ public class ProjectService implements IProject{
 
 
 	@Override
-	public Project retrieveProject(Long id) {
+	public Project retrieveProject(Integer id) {
 		Project project = projectRepository.findById(id).orElse(null);
 		return project;	
 	}
-	
-	
-	
+
+	@Override
+	public List<Task> getTasks(Integer idProject) {
+		return null;
+	}
+
+
 }

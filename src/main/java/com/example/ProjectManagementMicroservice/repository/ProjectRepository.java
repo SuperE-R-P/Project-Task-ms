@@ -12,11 +12,12 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface ProjectRepository extends JpaRepository<Project, Long> {
+public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	//Requete de recherche d'un projet par son nom
 	//http://localhost:8181/project/search/projectByName?name=projet1
 	@Query("select c from Project c where c.name like :name")
 	public Page<Project> projectByName(@Param("name") String n, Pageable pageable);
-	
+
+
 	List<Project> findByName(String name);
 }

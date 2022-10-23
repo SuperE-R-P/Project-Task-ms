@@ -26,7 +26,8 @@ public class ProjectController {
 	@Autowired
 	ProjectService projectService;
 
-	// http://localhost:9090/SpringMVC/project/retrieve-all-projects
+	// http://localhost:9090/project/retrieve-all-projects
+		@CrossOrigin(origins = "http://localhost:4200")
 		@GetMapping("/retrieve-all-projects")
 		@ResponseBody
 		public List<Project> getProjects() {
@@ -34,16 +35,17 @@ public class ProjectController {
 		return listProjects;
 		}
 		
-		// http://localhost:8080/SpringMVC/servlet/retrieve-clientk/8
-		@GetMapping("/retrieve-project/{project-id}")
-		@ResponseBody
-		public Project retrieveClient(@PathVariable("project-id") Long idProject) {
-		return projectService.retrieveProject(idProject);
-		}
+//		// http://localhost:8080/SpringMVC/servlet/retrieve-clientk/8
+//		@GetMapping("/retrieve-project/{project-id}")
+//		@ResponseBody
+//		public Project retrieveClient(@PathVariable("project-id") Long idProject) {
+//		return projectService.retrieveProject(idProject);
+//		}
 		
 		// http://localhost:9090/SpringMVC/project/add-project
 		@PostMapping("/add-project")
 		@ResponseBody
+		@CrossOrigin(origins = "http://localhost:4200")
 		public Project addProject(@RequestBody Project p)
 		{
 			Project project = projectService.addProject(p);
@@ -53,21 +55,31 @@ public class ProjectController {
 		// http://localhost:9090/SpringMVC/servlet/remove-project/{project-id}
 		@DeleteMapping("/remove-project/{project-id}")
 		@ResponseBody
-		public void removeProject(@PathVariable("project-id") Long idProject) {
+		@CrossOrigin(origins = "http://localhost:4200")
+		public void removeProject(@PathVariable("project-id") Integer idProject) {
 			projectService.deleteProject(idProject);
 		}
 		
 		// http://localhost:9090/SpringMVC/project/modify-project
-		@PutMapping("/modify-project")
+		@PutMapping("/modify-project/{id}")
 		@ResponseBody
-		public Project modifyProject(@RequestBody Project project) {
+		@CrossOrigin(origins = "http://localhost:4200")
+		public Project modifyProject(@RequestBody Project project,@PathVariable("id") Integer id) {
+			project.setId(id);
 		return projectService.updateProject(project);
 		}
     
     //http://localhost:9090/SpringMVC/project/projects/name/{n}
     @GetMapping(value = "/projects/name/{n}")
+	@CrossOrigin(origins = "http://localhost:4200")
     public Project findByName(@PathVariable(value = "n") String name){
         return projectService.findByName(name);
     }
+
+	@GetMapping(value = "/getProjectById/{idProject}")
+	@CrossOrigin(origins = "http://localhost:4200")
+	public Project findById(@PathVariable(value = "idProject") Integer idProject){
+		return projectService.retrieveProject(idProject);
+	}
 
 }

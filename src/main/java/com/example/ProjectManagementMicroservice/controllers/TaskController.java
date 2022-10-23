@@ -18,6 +18,7 @@ public class TaskController {
 
     // http://localhost:8083/SpringMVC/task/retrieve-all-tasks
     @GetMapping("/retrieve-all-tasks")
+    @CrossOrigin(origins = "http://localhost:4200")
     @ResponseBody
     public List<Task> getTasks() {
         List<Task> listTasks = taskService.retrieveAllTasks();
@@ -26,6 +27,7 @@ public class TaskController {
 
 
     @PostMapping("/add-task")
+    @CrossOrigin(origins = "http://localhost:4200")
     @ResponseBody
     public Task addTask(@RequestBody Task p)
     {
@@ -33,21 +35,38 @@ public class TaskController {
         return task;
     }
 
+    @PostMapping("/affect-task/{idProject}/{idTask}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public void affectTaskToProject(@PathVariable(value = "idProject") Integer idProject, @PathVariable(value = "idTask") Long idTask)
+    {
+        taskService.addToProject(idProject, idTask);
+    }
+
     @DeleteMapping("/remove-task/{task-id}")
+    @CrossOrigin(origins = "http://localhost:4200")
     @ResponseBody
     public void removeTask(@PathVariable("task-id") Long idTask) {
         taskService.deleteTask(idTask);
     }
 
-    @PutMapping("/modify-task")
+    @PutMapping("/modify-task/{id}")
     @ResponseBody
-    public Task modifyTask(@RequestBody Task task) {
+    @CrossOrigin(origins = "http://localhost:4200")
+    public Task modifyTask(@RequestBody Task task,@PathVariable("id") Long id) {
+        task.setTaskId(id);
         return taskService.updateTask(task);
     }
 
     @GetMapping(value = "/tasks/name/{n}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public Task findByName(@PathVariable(value = "n") String name){
         return taskService.findByName(name);
     }
 
+
+    @GetMapping(value = "/getTaskById/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public Task findById(@PathVariable(value = "id") Long idTask){
+        return taskService.retrieveTask(idTask);
+    }
 }

@@ -35,6 +35,21 @@ public class Task implements Serializable {
     @Lob
     private String description;
 
+    @ManyToOne
+    // @JsonIgnore
+    private Project project;
+
+    public Task() {
+
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
 
     public Long getTaskId() {
         return taskId;
@@ -98,5 +113,32 @@ public class Task implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskId=" + taskId +
+                ", name='" + name + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", status=" + status +
+                ", isExpired=" + isExpired +
+                ", expiredTime='" + expiredTime + '\'' +
+                ", description='" + description + '\'' +
+                ", project=" + project +
+                '}';
+    }
+
+    public Task(Long taskId, String name, LocalDate createdAt, LocalDate updatedAt, boolean status, boolean isExpired, String expiredTime, String description, Project project) {
+        this.taskId = taskId;
+        this.name = name;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.status = status;
+        this.isExpired = isExpired;
+        this.expiredTime = expiredTime;
+        this.description = description;
+        this.project = project;
     }
 }

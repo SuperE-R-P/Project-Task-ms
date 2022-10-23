@@ -16,4 +16,6 @@ public interface ITask {
 
 	Task retrieveTask(Long id);
 
+	void addToProject(Integer idProject, Long idTask);
+
 }

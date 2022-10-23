@@ -1,6 +1,7 @@
 package com.example.ProjectManagementMicroservice.services;
 
 import com.example.ProjectManagementMicroservice.entities.Project;
+import com.example.ProjectManagementMicroservice.entities.Task;
 
 import java.util.List;
 
@@ -10,10 +11,12 @@ public interface IProject {
 
 	Project addProject(Project p);
 
-	void deleteProject(Long id);
+	void deleteProject(Integer id);
 
 	Project updateProject(Project p);
 
-	Project retrieveProject(Long id);
+	Project retrieveProject(Integer id);
+
+	List<Task> getTasks(Integer idProject);
 
 }
